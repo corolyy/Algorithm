@@ -8,4 +8,4 @@ for i in range(1, len(org_list)):
         if org_list[j] > org_list[j + 1]:
             org_list[j], org_list[j + 1] = org_list[j + 1], org_list[j]
 
-print org_list # --> [1, 3, 5, 7, 8]
+print org_list # --> [1, 3, 5, 5, 7, 8, 8, 11]
