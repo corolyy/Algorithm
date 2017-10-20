@@ -1,19 +1,23 @@
 # -*- coding: utf-8 -*-
 from random import randint
 import sys
+
 '''旅行商问题: 最优方案需O(N!)
 
 求N个城市之间的最短路线，不定起点
 '''
+MARLIN, BERKELEY, SAN_FRANCISCO, FREMONT, PALO_ALTO = ('Marlin', 'Berkeley',
+                                                       'SanFrancisco',
+                                                       'Fremont', 'PaloAlto')
+Marlin = {BERKELEY: 17, SAN_FRANCISCO: 10, FREMONT: 32, PALO_ALTO: 36}
+Berkeley = {MARLIN: 17, SAN_FRANCISCO: 14, FREMONT: 31, PALO_ALTO: 48}
+SanFrancisco = {MARLIN: 10, BERKELEY: 14, FREMONT: 30, PALO_ALTO: 31}
+Fremont = {MARLIN: 32, SAN_FRANCISCO: 30, BERKELEY: 32, PALO_ALTO: 16}
+PaloAlto = {MARLIN: 36, SAN_FRANCISCO: 31, FREMONT: 16, BERKELEY: 48}
+city_dict = {MARLIN: Marlin, BERKELEY: Berkeley,
+             FREMONT: Fremont, PALO_ALTO: PaloAlto,
+             SAN_FRANCISCO: SanFrancisco}
 
-Marlin = {'Berkeley': 17, 'SanFrancisco': 10, 'Fremont': 32, 'PaloAlto': 36}
-Berkeley = {'Marlin': 17, 'SanFrancisco': 14, 'Fremont': 31, 'PaloAlto': 48}
-SanFrancisco = {'Marlin': 10, 'Berkeley': 14, 'Fremont': 30, 'PaloAlto': 31}
-Fremont = {'Marlin': 32, 'SanFrancisco': 30, 'Berkeley': 32, 'PaloAlto': 16}
-PaloAlto = {'Marlin': 36, 'SanFrancisco': 31, 'Fremont': 16, 'Berkeley': 48}
-city_dict = {'Marlin': Marlin, 'Berkeley': Berkeley,
-             'Fremont': Fremont, 'PaloAlto': PaloAlto,
-             'SanFrancisco': SanFrancisco}
 
 # 1. 随机选择一个城市作为起点
 # 2. 选择还没到过的最近的城市
@@ -25,6 +29,7 @@ def select_nearest(city_map, city_unreached):
             nearest_city, nearest_distance = city, distance
     return nearest_city, nearest_distance
 
+
 city_list = [key for key in city_dict.keys()]
 
 # - 随机选择城市
@@ -35,7 +40,7 @@ city_unreached = {key for key in city_dict.keys()} - {curr_city}
 # - 选择还没到过的城市，直到全部去过
 while city_unreached:
     curr_city, distance = select_nearest(city_dict.get(curr_city),
-                                            city_unreached)
+                                         city_unreached)
     city_unreached -= {curr_city}
     travel_order.append(curr_city)
     travel_distance += distance
@@ -43,5 +48,3 @@ while city_unreached:
 print travel_order, travel_distance
 print ('TravelOrder: {0}. \nTravelDistance: {1}'
        .format(' --> '.join(travel_order), travel_distance))
-
-
