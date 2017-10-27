@@ -10,7 +10,7 @@ class Node(object):
     def __init__(self, name, parent=None, cost=infinity, neighbors=None):
         self.name = name
         self.parent = None
-        self.cost = infinity
+        self.cost = cost
         self.neighbors = neighbors or {}
 
 # 初始化各个节点
